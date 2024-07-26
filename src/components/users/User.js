@@ -1,20 +1,33 @@
-import React, { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useEffect, useContext } from "react";
+import { Link, useParams } from "react-router-dom";
 import Reposit from '../repos/Reposit'
 import Spinner from "../layout/Spinner";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
+import GithubContext from '../../context/github/githubContext'
 
-const User = ({ user, getUser, loading, getUserRepos, repos, match }) => {
+// const User = ({ user, getUser, loading, getUserRepos, repos, match })
+const User = () => {
+  const githubContext = useContext(GithubContext)
   // componentDidMount() {
   //     this.props.getUser(this.props.match.params.login)
   //     this.props.getUserRepos(this.props.match.params.login)
   // }
 
+  // useEffect(() => {
+  //   getUser(match.params.login)
+  //   getUserRepos(match.params.login)
+  //   // eslint-disable-next-line
+  // }, []);
+
+  const { user, getUser, loading, repos, getUserRepos } = githubContext
+
+  const { login } = useParams();
+
   useEffect(() => {
-    getUser(match.params.login)
-    getUserRepos(match.params.login)
+    getUser(login);
+    getUserRepos(login);
     // eslint-disable-next-line
-  }, []);
+  }, [login]);
 
   // getUser(login);
 
@@ -32,7 +45,6 @@ const User = ({ user, getUser, loading, getUserRepos, repos, match }) => {
     bio,
     blog,
     company,
-    login,
     html_url,
     followers,
     following,
@@ -53,7 +65,7 @@ const User = ({ user, getUser, loading, getUserRepos, repos, match }) => {
       {hireable ? (
         <i className='bx bx-check-square success' />
       ) : (
-        <i class='bx bx-x-circle danger'></i>
+        <i className='bx bx-x-circle danger'></i>
       )}
       <div className='card'>
         <div className='centered'>
@@ -99,11 +111,11 @@ const User = ({ user, getUser, loading, getUserRepos, repos, match }) => {
         </div>
       </div>
 
-      <div className="card text-center">
-        <div className="badges badge-primary">Followers: {followers}</div>
-        <div className="badges badge-success">Following: {following}</div>
-        <div className="badges badge-danger">Public Repos: {public_repos}</div>
-        <div className="badges badge-dark">Public Gists: {public_gists}</div>
+      <div className="badge-card" style={{ textAlign: 'center'}}>
+        <div className="badges">Followers: {followers}</div>
+        <div className="badges">Following: {following}</div>
+        <div className="badges">Public Repos: {public_repos}</div>
+        <div className="badges">Public Gists: {public_gists}</div>
       </div>
 
       <Reposit repos={repos} />
@@ -111,12 +123,12 @@ const User = ({ user, getUser, loading, getUserRepos, repos, match }) => {
   );
 }
 
-User.propTypes = {
-  loading: PropTypes.bool,
-  user: PropTypes.object.isRequired,
-  repos: PropTypes.array.isRequired,
-  getUser: PropTypes.func.isRequired,
-  getUserRepos: PropTypes.func.isRequired,
-};
+// User.propTypes = {
+//   loading: PropTypes.bool,
+//   user: PropTypes.object.isRequired,
+//   repos: PropTypes.array.isRequired,
+//   getUser: PropTypes.func.isRequired,
+//   getUserRepos: PropTypes.func.isRequired,
+// }; NO NEED TO HAVE PROPTYPES AGAIN
 
 export default User;

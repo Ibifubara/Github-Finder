@@ -213,6 +213,13 @@ button:hover{
   grid-gap: 1rem;
 }
 
+.badge-card{
+  padding: 1rem;
+  border: #ccc 1px dotted;
+  margin: 0.7rem 0;
+  background: #6791c9;
+}
+
 .centered{
   display: flex;
   flex-direction: column;
@@ -239,27 +246,34 @@ button:hover{
   padding: 0.2rem 0.7rem;
   text-align: center;
   margin: 0.3rem;
-  background: var(--light-color);
-  color: #333;
   border-radius: 5px;
 }
 
-.badge:nth-child(1){
+.badges:nth-child(1){
   background: #dc3545;
   color: #fff;
 }
 
-.badge:nth-child(2){
+.badges:nth-child(2){
   background: #28a745;
   color: #fff;
 }
 
-.badge:nth-child(3){
+.badges:nth-child(3){
   background: #110b0b;
   color: #fff;
 }
 
-.badge:nth-child(4){
+.badges:nth-child(4){
   background: #333333;
   color: #fff;
+}
+
+ul li{
+  list-style-type: none;
+}
+
+.notFoundP{
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }

@@ -1,8 +1,11 @@
-import React, { useState} from "react";
+import React, { useState, useContext} from "react";
+import GithubContext from "../../context/github/githubContext";
+import AlertContext from '../../context/alert/alertContext';
 
-import PropTypes from "prop-types";
-
-const  Search = ({ searchUsers, showClear, clearPage, setAlert}) => {
+// const  Search = ({ searchUsers,showClear, clearPage, setAlert}) modified below
+const  Search = () => {
+  const githubContext = useContext(GithubContext)
+  const alertContext = useContext(AlertContext)
   // state = {
   //   text: "",
   // }; restructured below: 
@@ -20,9 +23,10 @@ const  Search = ({ searchUsers, showClear, clearPage, setAlert}) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if(text === ''){
-      setAlert('Please enter something', 'light')
+      alertContext.setAlert('Please enter something', 'light')
     } else{
-      searchUsers(text);
+      githubContext.searchUsers(text);
+      // searchUsers(text) modified above with context
       // this.setState({ text: "" });restructured below:
       setText('')
     } 
@@ -44,22 +48,25 @@ const  Search = ({ searchUsers, showClear, clearPage, setAlert}) => {
           />
           <input type='submit' value='Search' className='btn' />
         </form>
-        {showClear && (
-          <button onClick={clearPage}>Clear</button>
+        {githubContext.users.length > 0 && (
+          <button onClick={githubContext.clearPage}>Clear</button>
         )}
       </div>
     );
 }
 
+// {showClear && (
+//   <button onClick={clearPage}>Clear</button>
+// )} modified above
 // Search.defaultProps = {
 //   searchIcon: 'bx bx-search-alt'
 // }
 
-Search.propTypes = {
-  searchUsers: PropTypes.func.isRequired,
-  clearPage: PropTypes.func.isRequired,
-  showClear: PropTypes.bool.isRequired,
-  setAlert: PropTypes.func.isRequired
-};
+// Search.propTypes = {
+//   searchUsers: PropTypes.func.isRequired,
+//   clearPage: PropTypes.func.isRequired,
+//   showClear: PropTypes.bool.isRequired,
+//   setAlert: PropTypes.func.isRequired
+// };
 
 export default Search;
